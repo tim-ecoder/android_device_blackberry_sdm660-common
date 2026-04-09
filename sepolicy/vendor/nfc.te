@@ -1,0 +1,6 @@
+# Allow nfc to create, read and write in nfc_vendor_data_file
+allow nfc nfc_vendor_data_file:dir create_dir_perms;
+allow nfc nfc_vendor_data_file:file create_file_perms;
+
+# Allow nfc access to hwservicemanager
+allow hal_nfc_default default_android_service:service_manager { add find };

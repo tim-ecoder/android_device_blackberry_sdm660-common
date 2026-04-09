@@ -1,0 +1,33 @@
+allow qti_init_shell { sysfs sysfs_dm }:file write;
+
+allow qti_init_shell vendor_radio_data_file:dir rw_dir_perms;
+allow qti_init_shell vendor_radio_data_file:file create_file_perms;
+
+allow qti_init_shell rfs_shared_hlos_file:dir create_dir_perms;
+allow qti_init_shell rfs_shared_hlos_file:file create_file_perms;
+
+allow qti_init_shell ctl_start_prop:property_service set;
+allow qti_init_shell ctl_stop_prop:property_service set;
+
+allow qti_init_shell default_prop:file { getattr open };
+allow qti_init_shell default_prop:property_service set;
+allow qti_init_shell persist_file:dir getattr;
+allow qti_init_shell sysfs:file setattr;
+allow qti_init_shell persist_file:dir search;
+allow qti_init_shell self:capability dac_read_search;
+allow qti_init_shell vendor_alarm_prop:property_service set;
+
+# bochenekk stuff - hwkeys
+allow qti_init_shell vendor_hwkey_prop:file r_file_perms;
+allow qti_init_shell vendor_hwkey_prop:property_service set;
+
+# loggy.sh: allow running logcat and dmesg, writing logs to /cache/
+allow qti_init_shell shell_exec:file { read open getattr execute execute_no_trans };
+allow qti_init_shell system_file:file { read open getattr execute execute_no_trans };
+allow qti_init_shell logcat_exec:file { read open getattr execute execute_no_trans };
+allow qti_init_shell cache_file:dir { search write add_name };
+allow qti_init_shell cache_file:file { create write open getattr append };
+allow qti_init_shell kmsg_device:chr_file { read open };
+allow qti_init_shell logdr_socket:sock_file write;
+allow qti_init_shell logd:unix_stream_socket connectto;
+allow qti_init_shell self:capability { dac_override };

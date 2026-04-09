@@ -1,0 +1,37 @@
+//
+// SPDX-FileCopyrightText: 2022-2025 The LineageOS Project
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// Fingerprint
+cc_library_shared {
+    name: "libfakelogprint",
+    srcs: ["libfakelogprint.cpp"],
+    shared_libs: ["liblog"],
+    compile_multilib: "64",
+    vendor: true,
+}
+
+// Fingerprint hwbinder registration
+cc_library_shared {
+    name: "libhidl_shim_full",
+    vendor: true,
+    srcs: ["libhidl_shim_full.cpp"],
+    shared_libs: ["libhidlbase", "libbase"],
+}
+
+// Camera - Skia stub for OREO camera HAL watermark drawing
+cc_library_shared {
+    name: "libskia_shim",
+    srcs: ["libskia_shim.cpp"],
+    compile_multilib: "32",
+    vendor: true,
+}
+
+// Camera - jnigraphics stub for OREO vendor libs (not in vendor namespace)
+cc_library_shared {
+    name: "libjnigraphics_shim",
+    srcs: ["libjnigraphics_shim.cpp"],
+    compile_multilib: "32",
+    vendor: true,
+}
