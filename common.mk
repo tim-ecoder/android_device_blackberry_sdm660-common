@@ -121,10 +121,13 @@ PRODUCT_PACKAGES += \
     android.hardware.bluetooth.audio@2.0-impl \
     vendor.qti.hardware.btconfigstore@1.0.vendor
 
-# Camera
+# Camera (Sony-style: AIDL provider + 32-bit camera HAL from source)
 PRODUCT_PACKAGES += \
-    android.hardware.camera.provider@2.4-impl \
-    android.hardware.camera.provider@2.4-service
+    android.hardware.camera.provider-service_32.lineage \
+    camera.sdm660:32
+
+# QCamera2 HAL target - athena has same camera config as Sony nile (non-ganges sensors)
+$(call soong_config_set,qcom_camera_hal,target,nile)
 
 # Configstore
 PRODUCT_PACKAGES += \
