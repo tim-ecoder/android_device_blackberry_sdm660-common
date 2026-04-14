@@ -127,7 +127,8 @@ PRODUCT_PACKAGES += \
     camera.sdm660:32
 
 # QCamera2 HAL target - athena has same camera config as Sony nile (non-ganges sensors)
-$(call soong_config_set,qcom_camera_hal,target,nile)
+# athena uses default code paths (no TARGET_NILE/TARGET_GANGES defines)
+# $(call soong_config_set,qcom_camera_hal,target,nile)
 
 # Configstore
 PRODUCT_PACKAGES += \

@@ -1,0 +1,22 @@
+cc_library_shared {
+    name: "libcameracompat",
+
+    srcs: ["cameracompat.c"],
+
+    shared_libs: [
+        "libcutils",
+        "libdl",
+        "liblog",
+    ],
+
+    cflags: [
+        "-Wall",
+        "-Werror",
+        "-Wno-unused-parameter",
+    ],
+
+    compile_multilib: "32",
+    vendor: true,
+}
+
+// Gralloc wrapper not used — handle rearrange done in gr_priv_handle.h instead
