@@ -54,6 +54,9 @@ on fs
     restorecon_recursive /mnt/vendor/persist
     write /sys/kernel/boot_adsp/boot 1
 
+# Read keyboard layout from traceability partition and switch keypad device name
+    exec - root root -- /vendor/bin/sh /vendor/bin/init.keypad.sh
+
 on post-fs
     start vendor.qseecomd
     exec - system system -- /vendor/bin/init.qti.qseecomd.sh

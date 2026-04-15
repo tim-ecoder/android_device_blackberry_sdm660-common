@@ -22,7 +22,7 @@
 /(vendor|system/vendor)/bin/hw/android.hardware.lights-service.blackberry                   u:object_r:hal_light_default_exec:s0
 
 # Touch (GloveMode) service
-/(vendor|system/vendor)/bin/hw/vendor.lineage.touch@1.0-service.blackberry      u:object_r:hal_lineage_touch_default_exec:s0
+/(vendor|system/vendor)/bin/hw/vendor.lineage.touch-service.blackberry      u:object_r:hal_lineage_touch_default_exec:s0
 
 # TouchKeypad service
 /(vendor|system/vendor)/bin/hw/vendor.blackberry.touchkeypad-service            u:object_r:hal_touchkeypad_exec:s0
@@ -39,6 +39,10 @@
 # Loggy boot logging
 /(vendor|system/vendor)/bin/loggy\.sh   u:object_r:qti_init_shell_exec:s0
 /(vendor|system/vendor)/bin/loggy2\.sh  u:object_r:qti_init_shell_exec:s0
+
+# Keyboard layout detection
+/(vendor|system/vendor)/bin/init\.keypad\.sh                                    u:object_r:qti_init_shell_exec:s0
+/(vendor|system/vendor)/bin/trace_util                                          u:object_r:qti_init_shell_exec:s0
 
 # Widevine
 /(vendor|system/vendor)/bin/hw/android.hardware.drm@1.0-service.widevine        u:object_r:hal_drm_widevine_exec:s0

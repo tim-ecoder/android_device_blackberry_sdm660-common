@@ -279,6 +279,7 @@ PRODUCT_PACKAGES += \
     Sdm660LineageSDKOverlay \
     Sdm660SystemUIOverlay \
     Sdm660SettingsOverlay \
+    Sdm660SettingsProviderOverlay \
     Sdm660TelephonyOverlay \
     Sdm660TetheringOverlay \
     Sdm660WifiOverlayOverlay
@@ -357,6 +358,7 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_PACKAGES += \
     init.class_main.sh \
+    init.keypad.sh \
     init.qcom.early_boot.sh \
     init.qcom.post_boot.sh \
     init.qcom.sensors.sh \
@@ -430,7 +432,9 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     libstdc++_vendor
 
-# Touch - vendor.lineage.touch@1.0 removed in LOS23
+# Touch - vendor.lineage.touch AIDL service (GloveMode + KeyDisabler)
+PRODUCT_PACKAGES += \
+    vendor.lineage.touch-service.blackberry
 
 # Thermal
 PRODUCT_PACKAGES += \

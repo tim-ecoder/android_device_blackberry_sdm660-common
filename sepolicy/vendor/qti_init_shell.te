@@ -31,3 +31,7 @@ allow qti_init_shell kmsg_device:chr_file { read open };
 allow qti_init_shell logdr_socket:sock_file write;
 allow qti_init_shell logd:unix_stream_socket connectto;
 allow qti_init_shell self:capability { dac_override };
+
+# Keyboard layout detection - trace_util reads traceability partition
+allow qti_init_shell block_device:blk_file { open read getattr };
+allow qti_init_shell block_device:lnk_file { read getattr };

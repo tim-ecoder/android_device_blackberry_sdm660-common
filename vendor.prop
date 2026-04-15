@@ -10,6 +10,7 @@ persist.bluetooth.a2dp_offload.cap=sbc-aac-aptx-aptxhd-ldac
 persist.bluetooth.a2dp_offload.disabled=true
 persist.vendor.audio.fluence.speaker=true
 persist.vendor.audio.fluence.voicecall=true
+persist.vendor.audio.fluence.voicecomm=true
 persist.vendor.audio.fluence.voicerec=false
 persist.vendor.audio.hifi.int_codec=true
 persist.vendor.audio.hw.binder.size_kbyte=1024
@@ -30,7 +31,7 @@ vendor.audio.feature.anc_headset.enable=true
 vendor.audio.feature.audiozoom.enable=false
 vendor.audio.feature.battery_listener.enable=false
 vendor.audio.feature.compr_cap.enable=false
-vendor.audio.feature.compr_voip.enable=true
+vendor.audio.feature.compr_voip.enable=false
 vendor.audio.feature.compress_in.enable=false
 vendor.audio.feature.compress_meta_data.enable=true
 vendor.audio.feature.concurrent_capture.enable=false
@@ -83,7 +84,7 @@ vendor.audio.use.sw.alac.decoder=true
 vendor.audio.use.sw.ape.decoder=true
 vendor.audio.volume.headset.gain.depcal=true
 vendor.audio_hal.period_size=192
-vendor.voice.path.for.pcm.voip=true
+vendor.voice.path.for.pcm.voip=false
 
 # Bluetooth
 bluetooth.device.class_of_device=90,2,12
@@ -142,7 +143,7 @@ ro.hwui.render_ahead=20
 # DRM
 drm.service.enabled=true
 ro.com.widevine.cachesize=16777216
-persist.env.fastdorm.enabled=true
+persist.env.fastdorm.enabled=false
 persist.gsmapp.ezincall.video=false
 persist.sys.screenmode=1
 persist.vendor.dpm.feature=11
@@ -160,14 +161,15 @@ ro.opengles.version=196610
 
 # GPS
 persist.backup.ntpServer=0.pool.ntp.org
+ro.vendor.qti.va_odm.support=1
 
 # Logging
-persist.vendor.stbDebugCtlEnable=1
+persist.vendor.stbDebugCtlEnable=0
 ro.logdumpd.enabled=0
 
 # Miscellaneous
 persist.sys.bbsys=on
-persist.vendor.qcomsysd.enabled=1
+persist.vendor.qcomsysd.enabled=0
 ro.cp_system_other_odex=1
 sys.vendor.shutdown.waittime=500
 
@@ -181,7 +183,9 @@ ro.vendor.extension_library=libqti-perfd-client.so
 vendor.power.pasr.enabled=true
 
 # Radio
-persist.vendor.radio.enableadvancedscan=false
+persist.vendor.radio.enableadvancedscan=true
+persist.vendor.radio.data_con_rprt=1
+persist.vendor.radio.data_ltd_sys_ind=1
 persist.vendor.radio.apm_sim_not_pwdn=1
 persist.vendor.radio.sib16_support=1
 persist.vendor.radio.custom_ecc=1

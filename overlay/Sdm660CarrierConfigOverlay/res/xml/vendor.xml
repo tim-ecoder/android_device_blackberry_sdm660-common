@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carrier_config_list>
     <carrier_config>
-        <boolean name="carrier_volte_available_bool" value="false" />
-        <boolean name="carrier_vt_available_bool" value="false" />
-        <boolean name="carrier_wfc_ims_available_bool" value="false" />
+        <boolean name="carrier_volte_available_bool" value="true" />
+        <boolean name="carrier_vt_available_bool" value="true" />
+        <boolean name="carrier_wfc_ims_available_bool" value="true" />
         <boolean name="display_hd_audio_property_bool" value="true" />
         <boolean name="editable_wfc_mode_bool" value="true" />
         <boolean name="hide_enhanced_4g_lte_bool" value="false" />
@@ -21,7 +21,7 @@
         <int name="wfc_spn_format_idx_int" value="0" />
         <int name="carrier_default_wfc_ims_mode_int" value="2" />
         <int name="carrier_default_wfc_ims_roaming_mode_int" value="2" />
-        <string name="config_ims_package_override_string">com.google.android.ims</string>
+        <string name="config_ims_package_override_string">org.codeaurora.ims</string>
         <boolean name="support_pause_ims_video_calls_bool" value="false" />
         <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
         <string name="gps.supl_host">supl.google.com</string>

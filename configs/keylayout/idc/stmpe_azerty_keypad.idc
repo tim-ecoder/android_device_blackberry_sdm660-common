@@ -28,5 +28,5 @@ keyboard.builtIn = 1
 keyboard.orientationAware = 0
 
 # Our custom key character map
-keyboard.characterMap = stmpe
-keyboard.layout = stmpe
+keyboard.characterMap = stmpe_azerty
+keyboard.layout = stmpe_azerty
