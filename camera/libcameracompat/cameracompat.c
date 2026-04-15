@@ -207,10 +207,10 @@ void* mmap(void* addr, size_t length, int prot, int flags, int fd, off_t offset)
     if (!real_mmap)
         real_mmap = (void*(*)(void*,size_t,int,int,int,off_t))dlsym(RTLD_NEXT, "mmap");
 
-    if (length < MMAP_MIN_THRESHOLD && fd >= 0 && (prot & PROT_WRITE) && is_dmabuf_fd(fd)) {
+    if (length < MMAP_MIN_THRESHOLD && fd >= 0 && is_dmabuf_fd(fd)) {
         size_t actual = get_dmabuf_size(fd);
         if (actual > length) {
-            ALOGI("Fix mmap: fd=%d %zu->%zu", fd, length, actual);
+            ALOGI("Fix mmap: fd=%d %zu->%zu prot=0x%x", fd, length, actual, prot);
             length = actual;
         }
     }
@@ -221,10 +221,10 @@ void* mmap64(void* addr, size_t length, int prot, int flags, int fd, off64_t off
     if (!real_mmap64)
         real_mmap64 = (void*(*)(void*,size_t,int,int,int,off64_t))dlsym(RTLD_NEXT, "mmap64");
 
-    if (length < MMAP_MIN_THRESHOLD && fd >= 0 && (prot & PROT_WRITE) && is_dmabuf_fd(fd)) {
+    if (length < MMAP_MIN_THRESHOLD && fd >= 0 && is_dmabuf_fd(fd)) {
         size_t actual = get_dmabuf_size(fd);
         if (actual > length) {
-            ALOGI("Fix mmap64: fd=%d %zu->%zu", fd, length, actual);
+            ALOGI("Fix mmap64: fd=%d %zu->%zu prot=0x%x", fd, length, actual, prot);
             length = actual;
         }
     }
