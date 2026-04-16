@@ -1,3 +1,16 @@
 dontaudit system_app system_suspend_control_service:service_manager find;
 dontaudit system_app system_suspend_control_internal_service:service_manager find;
 dontaudit vendor_init default_prop:file read;
+
+# Zygote-scoped threads that race ahead of domain transition during early
+# telephony/system_server/bluetooth/network_stack startup. The real work
+# happens after the thread's domain swaps, so the denials are log-only noise.
+dontaudit zygote radio:binder call;
+dontaudit zygote servicemanager:binder call;
+dontaudit zygote system_server:binder transfer;
+dontaudit system_server zygote:binder { call transfer };
+dontaudit network_stack zygote:binder call;
+dontaudit platform_app zygote:binder { call transfer };
+
+# Interactive shell noise: dmesg + getprop hitting vendor-namespace props
+dontaudit shell vendor_default_prop:file { open getattr };

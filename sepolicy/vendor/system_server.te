@@ -4,7 +4,11 @@ allow system_server sysfs_msm_subsys:file r_file_perms;
 get_prop(system_server, exported_camera_prop);
 get_prop(system_server, userspace_reboot_config_prop)
 get_prop(system_server, userspace_reboot_exported_prop)
+get_prop(system_server, vendor_alarm_prop)
 get_prop(qtidataservices_app, vendor_dpm_prop)
+
+# DisplayManager reads MSM ext-disp cable state for HDMI/DP hotplug detection
+allow system_server sysfs_extcon:file r_file_perms;
 
 allow system_server zygote:process { getpgid };
 allow system_server app_zygote:process { getpgid };
