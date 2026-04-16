@@ -39,3 +39,6 @@ allow qti_init_shell self:capability { dac_override };
 allow qti_init_shell block_device:blk_file { open read getattr };
 allow qti_init_shell block_device:lnk_file { read getattr };
 allow qti_init_shell traceability_block_device:blk_file r_file_perms;
+
+# trace_util reads /proc/sys/vm/overcommit_memory to decide how to mmap
+allow qti_init_shell proc_overcommit_memory:file r_file_perms;

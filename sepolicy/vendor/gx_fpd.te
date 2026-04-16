@@ -6,6 +6,7 @@ init_daemon_domain(gx_fpd)
 
 # Allow Binder communication
 vndbinder_use(gx_fpd)
+hwbinder_use(gx_fpd)
 binder_call(gx_fpd, hal_fingerprint_default)
 
 # Add services

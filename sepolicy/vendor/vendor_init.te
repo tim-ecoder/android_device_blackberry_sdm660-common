@@ -30,3 +30,8 @@ set_prop(vendor_init, vendor_touchkeypad_prop);
 allow vendor_init sysfs_touch_keypad:dir search;
 allow vendor_init sysfs_touch_keypad:lnk_file read;
 allow vendor_init sysfs_touch_keypad:file { open write };
+
+# init.target.rc creates the /dev/msm_config compat symlink (points at
+# /dev/video0). The link is labelled audio_device.
+allow vendor_init audio_device:lnk_file { create getattr setattr };
+
