@@ -24,3 +24,9 @@ allow vendor_init build_prop:property_service set;
 allow vendor_init default_prop:property_service set;
 allow vendor_init radio_prop:property_service set;
 allow vendor_init powerctl_prop:file read;
+
+# Touch keypad: observer writes to /sys/devices/touch_keypad/turn_off
+set_prop(vendor_init, vendor_touchkeypad_prop);
+allow vendor_init sysfs_touch_keypad:dir search;
+allow vendor_init sysfs_touch_keypad:lnk_file read;
+allow vendor_init sysfs_touch_keypad:file { open write };

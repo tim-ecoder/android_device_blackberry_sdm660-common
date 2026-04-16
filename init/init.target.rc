@@ -284,3 +284,10 @@ service smcinvoked /system/bin/smcinvoked
    user system
    group system
 
+# Touch keypad toggle via property (written by the TouchKeypad QS tile)
+on property:persist.vendor.touchkeypad.disabled=1
+    write /sys/devices/touch_keypad/turn_off 1
+
+on property:persist.vendor.touchkeypad.disabled=0
+    write /sys/devices/touch_keypad/turn_off 0
+
