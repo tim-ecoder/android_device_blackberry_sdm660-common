@@ -101,10 +101,6 @@
             <instance>default</instance>
         </interface>
     </hal>
-    <hal format="aidl">
-        <name>android.hardware.memtrack</name>
-        <fqname>IMemtrack/default</fqname>
-    </hal>
     <hal format="hidl">
         <name>android.hardware.radio</name>
         <transport>hwbinder</transport>
