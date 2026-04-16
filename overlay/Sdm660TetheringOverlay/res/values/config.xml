@@ -20,10 +20,11 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
     <!-- Use the BPF offload for tethering when the kernel has support. True by default.
-    If the device doesn't want to support tether BPF offload, this should be false.
-    Note that this setting could be overridden by device config.
+    LOS22 disabled this due to WPA hotspot issues, but LOS23 has working eBPF
+    (NetBpfLoad successfully populates /sys/fs/bpf/tethering/) on the 4.19 kernel
+    with ro.bpf.kver_override=5.10.239, so re-enable it.
     -->
-    <bool translatable="false" name="config_tether_enable_bpf_offload">false</bool>
+    <bool translatable="false" name="config_tether_enable_bpf_offload">true</bool>
 
     <!-- List of regexpressions describing the interface (if any) that represent tetherable
     USB interfaces.  If the device doesn't want to support tethering over USB this should
