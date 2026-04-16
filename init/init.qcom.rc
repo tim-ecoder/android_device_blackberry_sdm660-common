@@ -247,7 +247,7 @@ on boot
 # msm specific files that need to be created on /data
 on post-fs-data
     mkdir /data/vendor/misc 01771 system system
-    start loggy
+    #start loggy
     #start loggy2
 
     # Create /dev/msm_config alias for camera blob compatibility
@@ -1244,4 +1244,7 @@ service loggy /vendor/bin/loggy.sh
 service loggy2 /vendor/bin/loggy2.sh
     class core
     user root
+    group root system log
     oneshot
+    disabled
+    seclabel u:r:su:s0
