@@ -292,3 +292,8 @@ lineage.updater.uri=https://fumo.enterprises/ota/api/v1/{device}/{type}/noincr
 
 # ADB
 persist.sys.usb.config=adb
+
+# eBPF: report a 5.10 kernel to NetBpfLoad / apexd so Android 16 (25Q2+25Q4)
+# checks pass against our real 4.19 kernel. Override is read via
+# __system_property_get("ro.bpf.kver_override") before falling back to uname -r.
+ro.bpf.kver_override=5.10.239
