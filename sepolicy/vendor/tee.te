@@ -3,6 +3,9 @@ allow tee mnt_vendor_file:dir { search };
 allow tee persist_drm_file:dir create_dir_perms;
 allow tee persist_drm_file:file create_file_perms;
 
-# qseecomd accesses legacy /data/goodix/ for FP calibration (LOS22 path)
-dontaudit tee system_data_file:dir create_dir_perms;
-dontaudit tee system_data_file:file create_file_perms;
+# qseecomd accesses legacy /data/goodix/ for FP calibration + templates.
+# gx_fpd ignores the AIDL HAL's set_active_group path and writes
+# templates to /data/goodix/0/ (labelled system_data_file). Must be
+# allow, not dontaudit — dontaudit still blocks in enforcing.
+allow tee system_data_file:dir create_dir_perms;
+allow tee system_data_file:file create_file_perms;

@@ -2430,19 +2430,21 @@ case "$target" in
             echo 1 > /sys/devices/system/cpu/cpu6/online
             echo 1 > /sys/devices/system/cpu/cpu7/online
 
-            # configure LPM - enable retention for power savings
-            echo Y > /sys/module/lpm_levels/system/pwr/cpu0/ret/idle_enabled
-            echo Y > /sys/module/lpm_levels/system/pwr/cpu1/ret/idle_enabled
-            echo Y > /sys/module/lpm_levels/system/pwr/cpu2/ret/idle_enabled
-            echo Y > /sys/module/lpm_levels/system/pwr/cpu3/ret/idle_enabled
-            echo Y > /sys/module/lpm_levels/system/perf/cpu4/ret/idle_enabled
-            echo Y > /sys/module/lpm_levels/system/perf/cpu5/ret/idle_enabled
-            echo Y > /sys/module/lpm_levels/system/perf/cpu6/ret/idle_enabled
-            echo Y > /sys/module/lpm_levels/system/perf/cpu7/ret/idle_enabled
-            echo Y > /sys/module/lpm_levels/system/pwr/pwr-l2-dynret/idle_enabled
-            echo Y > /sys/module/lpm_levels/system/perf/perf-l2-dynret/idle_enabled
-            echo Y > /sys/module/lpm_levels/system/pwr/pwr-l2-ret/idle_enabled
-            echo Y > /sys/module/lpm_levels/system/perf/perf-l2-ret/idle_enabled
+            # configure LPM - disable retention (matches all sdm660 refs:
+            # whyred, x00td, sony-nile). Retention causes 1s+ wake latency
+            # that stalls GPU buffer dequeue on unlock.
+            echo N > /sys/module/lpm_levels/system/pwr/cpu0/ret/idle_enabled
+            echo N > /sys/module/lpm_levels/system/pwr/cpu1/ret/idle_enabled
+            echo N > /sys/module/lpm_levels/system/pwr/cpu2/ret/idle_enabled
+            echo N > /sys/module/lpm_levels/system/pwr/cpu3/ret/idle_enabled
+            echo N > /sys/module/lpm_levels/system/perf/cpu4/ret/idle_enabled
+            echo N > /sys/module/lpm_levels/system/perf/cpu5/ret/idle_enabled
+            echo N > /sys/module/lpm_levels/system/perf/cpu6/ret/idle_enabled
+            echo N > /sys/module/lpm_levels/system/perf/cpu7/ret/idle_enabled
+            echo N > /sys/module/lpm_levels/system/pwr/pwr-l2-dynret/idle_enabled
+            echo N > /sys/module/lpm_levels/system/perf/perf-l2-dynret/idle_enabled
+            echo N > /sys/module/lpm_levels/system/pwr/pwr-l2-ret/idle_enabled
+            echo N > /sys/module/lpm_levels/system/perf/perf-l2-ret/idle_enabled
             # enable LPM
             echo 0 > /sys/module/lpm_levels/parameters/sleep_disabled
 
