@@ -1,0 +1,6 @@
+# com.android.bluetooth gets re-signed during LOS build, so its signature
+# no longer matches the AOSP bluetooth cert in plat_mac_permissions.xml.
+# Result: seinfo=default instead of seinfo=bluetooth, and the plat_seapp
+# entry (user=bluetooth seinfo=bluetooth) never matches. Add a fallback
+# that matches on user=bluetooth alone.
+user=bluetooth isPrivApp=true name=com.android.bluetooth domain=bluetooth type=bluetooth_data_file levelFrom=all
