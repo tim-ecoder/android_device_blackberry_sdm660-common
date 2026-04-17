@@ -2,3 +2,4 @@
 # "wifi_loaded" signal. In AOSP's layout init_service_status_private_prop
 # is only readable by core init; allow vendor_init too.
 allow vendor_init init_service_status_private_prop:file r_file_perms;
+allow vendor_init vendor_seemp_data_file:dir { getattr search };

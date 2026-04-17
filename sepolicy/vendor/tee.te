@@ -2,3 +2,7 @@
 allow tee mnt_vendor_file:dir { search };
 allow tee persist_drm_file:dir create_dir_perms;
 allow tee persist_drm_file:file create_file_perms;
+
+# qseecomd accesses legacy /data/goodix/ for FP calibration (LOS22 path)
+dontaudit tee system_data_file:dir create_dir_perms;
+dontaudit tee system_data_file:file create_file_perms;

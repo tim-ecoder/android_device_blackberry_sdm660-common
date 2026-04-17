@@ -1,1 +1,2 @@
 get_prop(vendor_dpmd, vendor_dpm_prop)
+get_prop(vendor_dataservice_app, vendor_dpm_prop)
