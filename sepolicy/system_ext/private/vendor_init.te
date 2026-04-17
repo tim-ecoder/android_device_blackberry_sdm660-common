@@ -1,0 +1,4 @@
+# vendor_init reads init.svc.wpa_supplicant to decide when to emit the
+# "wifi_loaded" signal. In AOSP's layout init_service_status_private_prop
+# is only readable by core init; allow vendor_init too.
+allow vendor_init init_service_status_private_prop:file r_file_perms;

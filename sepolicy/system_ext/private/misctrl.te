@@ -1,0 +1,5 @@
+# misctrl probes the same DT firmware nodes as kcmdlinectrl to locate
+# the misc partition. On athena these nodes don't exist; misctrl falls
+# back to ro.boot properties. Allow the read so the denial goes quiet.
+allow misctrl sysfs_dt_firmware_android:dir r_dir_perms;
+allow misctrl sysfs_dt_firmware_android:file r_file_perms;

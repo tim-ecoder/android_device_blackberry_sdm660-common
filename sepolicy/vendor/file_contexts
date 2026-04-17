@@ -26,6 +26,9 @@
 # TouchKeypad service
 /(vendor|system/vendor)/bin/hw/vendor.blackberry.touchkeypad-service            u:object_r:hal_touchkeypad_exec:s0
 
+# Gatekeeper software fallback (needed alongside QTI gatekeeper for enforcing)
+/(vendor|system/vendor)/bin/hw/android\.hardware\.gatekeeper@1\.0-service\.software   u:object_r:hal_gatekeeper_default_exec:s0
+
 # Partitions (Non-A/B)
 /dev/block/platform/soc/c0c4000\.sdhci/by-name/storesec                        u:object_r:boot_block_device:s0
 

@@ -1,0 +1,3 @@
+# system_suspend enumerates wakeup source names at /sys/devices/.../wakeupN/name
+# to attribute suspend events. AOSP didn't label this; allow the generic read.
+allow system_suspend sysfs:file r_file_perms;

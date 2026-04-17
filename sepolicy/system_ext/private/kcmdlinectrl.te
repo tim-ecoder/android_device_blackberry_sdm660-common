@@ -1,0 +1,6 @@
+# athena's fstab is in the ramdisk, not in the DT firmware nodes, so
+# kcmdlinectrl's bootloader_message probe always fails. AOSP's own
+# kcmdlinectrl.te comment says the failure is fine, but the dontaudit
+# isn't in there upstream. Just allow the read so the denial stops.
+allow kcmdlinectrl sysfs_dt_firmware_android:dir r_dir_perms;
+allow kcmdlinectrl sysfs_dt_firmware_android:file r_file_perms;

@@ -1,0 +1,5 @@
+# gd_stack_thread and droid.bluetooth run briefly under zygote scontext
+# before domain transition. They read bluetooth_lea_prop and set
+# binder_cache_bluetooth_server_prop during that window.
+allow zygote bluetooth_lea_prop:file r_file_perms;
+allow zygote binder_cache_bluetooth_server_prop:property_service set;
