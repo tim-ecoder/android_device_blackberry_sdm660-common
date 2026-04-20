@@ -158,11 +158,12 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.gatekeeper@1.0.vendor
 
-# Software Keymaster + Gatekeeper (4.19 builds: TZ apps for qti HALs are incompatible)
+# AOSP Software Keymaster 4.0 + Gatekeeper (supports FBE v2 with Qualcomm ICE)
 PRODUCT_PACKAGES += \
-    android.hardware.keymaster@3.0-impl \
-    android.hardware.keymaster@3.0-service \
-    android.hardware.gatekeeper@1.0-service.software
+    android.hardware.keymaster@4.0-service \
+    android.hardware.gatekeeper@1.0-service.software \
+    android.hardware.keymaster@4.0.vendor \
+    android.hardware.gatekeeper@1.0.vendor
 
 # Vibrator (QTI service supporting qti-haptics input FF on 4.19)
 PRODUCT_PACKAGES += \
