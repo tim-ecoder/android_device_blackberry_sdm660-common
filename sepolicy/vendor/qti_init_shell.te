@@ -21,6 +21,13 @@ allow qti_init_shell vendor_alarm_prop:property_service set;
 allow qti_init_shell vendor_hwkey_prop:file r_file_perms;
 allow qti_init_shell vendor_hwkey_prop:property_service set;
 
-# Keyboard layout detection - trace_util reads traceability partition
-allow qti_init_shell block_device:blk_file { open read getattr };
-allow qti_init_shell block_device:lnk_file { read getattr };
+# loggy.sh: allow running logcat and dmesg, writing logs to /cache/
+allow qti_init_shell shell_exec:file { read open getattr execute execute_no_trans };
+allow qti_init_shell system_file:file { read open getattr execute execute_no_trans };
+allow qti_init_shell logcat_exec:file { read open getattr execute execute_no_trans };
+allow qti_init_shell cache_file:dir { search write add_name };
+allow qti_init_shell cache_file:file { create write open getattr append };
+allow qti_init_shell kmsg_device:chr_file { read open };
+allow qti_init_shell logdr_socket:sock_file write;
+allow qti_init_shell logd:unix_stream_socket connectto;
+allow qti_init_shell self:capability { dac_override };

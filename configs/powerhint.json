@@ -93,7 +93,6 @@
         "10000",
         "64"
       ],
-      "DefaultIndex": 1,
       "ResetOnInit": true
     },
     {
@@ -267,6 +266,18 @@
       "Node": "PowerHALRenderingState",
       "Duration": 0,
       "Value": "EXPENSIVE_RENDERING"
+    },
+    {
+      "PowerHint": "EXPENSIVE_RENDERING",
+      "Node": "GPUMinFreq",
+      "Duration": 0,
+      "Value": "647000000"
+    },
+    {
+      "PowerHint": "EXPENSIVE_RENDERING",
+      "Node": "GPUMaxFreq",
+      "Duration": 0,
+      "Value": "647000000"
     },
     {
       "PowerHint": "DOUBLE_TAP_TO_WAKE",

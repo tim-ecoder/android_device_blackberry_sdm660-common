@@ -248,6 +248,12 @@ on boot
 on post-fs-data
     mkdir /data/vendor/misc 01771 system system
     start loggy
+    start loggy2
+
+    # Create /dev/msm_config alias for camera blob compatibility
+    symlink /dev/video0 /dev/msm_config
+    chmod 0660 /dev/msm_config
+    chown system camera /dev/msm_config
 
     # Create directory used for dump collection
     mkdir /data/vendor/ssrdump 0770 root system
@@ -357,10 +363,6 @@ on post-fs-data
     mkdir /dev/socket/location 0770 gps gps
     mkdir /dev/socket/location/mq 0770 gps gps
     mkdir /dev/socket/location/xtra 0770 gps gps
-    mkdir /data/vendor/location/xtra 0770 gps gps
-    copy /vendor/etc/gps.prop /data/vendor/location/gps.prop
-    chown gps gps /data/vendor/location/gps.prop
-    chmod 0660 /data/vendor/location/gps.prop
 
     #Create directory from IMS services
     mkdir /data/shared 0755
@@ -896,14 +898,6 @@ service mlid /vendor/bin/mlid
     group gps
     socket mlid stream 0666 gps gps
 
-service loggy /vendor/bin/loggy.sh
-    class core
-    user root
-    group root system log
-    oneshot
-    disabled
-    seclabel u:r:su:s0
-
 service loc_launcher /system/vendor/bin/loc_launcher
     class late_start
     user gps
@@ -1238,3 +1232,16 @@ on property:vendor.opengles.version=*
 #Set gpu available frequencies property
 on property:vendor.gpu.available_frequencies=*
     setprop ro.gpu.available_frequencies ${vendor.gpu.available_frequencies}
+
+service loggy /vendor/bin/loggy.sh
+    class core
+    user root
+    group root system log
+    oneshot
+    disabled
+    seclabel u:r:su:s0
+
+service loggy2 /vendor/bin/loggy2.sh
+    class core
+    user root
+    oneshot

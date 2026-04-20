@@ -19,10 +19,6 @@ set_prop(vendor_init, vendor_dpm_prop);
 get_prop(vendor_init, vendor_fingerprint_prop)
 set_prop(vendor_init, vendor_radio_prop);
 set_prop(vendor_init, audio_prop);
-set_prop(vendor_init, vendor_touchkeypad_prop);
-allow vendor_init sysfs_touch_keypad:dir search;
-allow vendor_init sysfs_touch_keypad:lnk_file read;
-allow vendor_init sysfs_touch_keypad:file { open write };
 
 allow vendor_init build_prop:property_service set;
 allow vendor_init default_prop:property_service set;

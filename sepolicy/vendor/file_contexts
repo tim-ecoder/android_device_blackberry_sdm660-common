@@ -24,6 +24,9 @@
 # Touch (GloveMode) service
 /(vendor|system/vendor)/bin/hw/vendor.lineage.touch@1.0-service.blackberry      u:object_r:hal_lineage_touch_default_exec:s0
 
+# TouchKeypad service
+/(vendor|system/vendor)/bin/hw/vendor.blackberry.touchkeypad-service            u:object_r:hal_touchkeypad_exec:s0
+
 # Partitions (Non-A/B)
 /dev/block/platform/soc/c0c4000\.sdhci/by-name/storesec                        u:object_r:boot_block_device:s0
 
@@ -33,9 +36,9 @@
 # FocalTech NavKeys
 /sys/board_properties/virtualkeys\.fts_input_device_B    u:object_r:sysfs_virtualkeys:s0
 
-# Keyboard layout detection
-/(vendor|system/vendor)/bin/init\.keypad\.sh                                    u:object_r:qti_init_shell_exec:s0
-/(vendor|system/vendor)/bin/trace_util                                          u:object_r:qti_init_shell_exec:s0
+# Loggy boot logging
+/(vendor|system/vendor)/bin/loggy\.sh   u:object_r:qti_init_shell_exec:s0
+/(vendor|system/vendor)/bin/loggy2\.sh  u:object_r:qti_init_shell_exec:s0
 
 # Widevine
 /(vendor|system/vendor)/bin/hw/android.hardware.drm@1.0-service.widevine        u:object_r:hal_drm_widevine_exec:s0

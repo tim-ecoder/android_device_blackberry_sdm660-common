@@ -54,9 +54,6 @@ on fs
     restorecon_recursive /mnt/vendor/persist
     write /sys/kernel/boot_adsp/boot 1
 
-# Read keyboard layout from traceability partition and switch keypad device name
-    exec - root root -- /vendor/bin/sh /vendor/bin/init.keypad.sh
-
 on post-fs
     start vendor.qseecomd
     exec - system system -- /vendor/bin/init.qti.qseecomd.sh
@@ -66,6 +63,9 @@ on init
     write /sys/module/qpnp_rtc/parameters/poweron_alarm 1
 
 on post-fs-data
+    # Force start adbd early for debugging
+    setprop sys.usb.configfs 1
+    setprop sys.usb.config adb
     mkdir /data/tombstones/modem 0771 system system
     mkdir /data/tombstones/lpass 0771 system system
     mkdir /data/tombstones/wcnss 0771 system system
@@ -82,7 +82,6 @@ on boot
     write /dev/cpuset/foreground/boost/cpus 0-7
     write /dev/cpuset/background/cpus 0-7
     write /dev/cpuset/system-background/cpus 0-7
-    chown system system /sys/devices/virtual/graphics/fb0/sre_enable
     ####Regionalization config and prop files####
     chmod 0644 /persist/speccfg/spec
     chmod 0644 /persist/speccfg/devicetype
@@ -281,11 +280,4 @@ service smcinvoked /system/bin/smcinvoked
    class main
    user system
    group system
-
-# Touch keypad toggle via property
-on property:persist.vendor.touchkeypad.disabled=1
-    write /sys/devices/touch_keypad/turn_off 1
-
-on property:persist.vendor.touchkeypad.disabled=0
-    write /sys/devices/touch_keypad/turn_off 0
 
