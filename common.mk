@@ -158,6 +158,16 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.gatekeeper@1.0.vendor
 
+# Software Keymaster + Gatekeeper (4.19 builds: TZ apps for qti HALs are incompatible)
+PRODUCT_PACKAGES += \
+    android.hardware.keymaster@3.0-impl \
+    android.hardware.keymaster@3.0-service \
+    android.hardware.gatekeeper@1.0-service.software
+
+# Vibrator (QTI service supporting qti-haptics input FF on 4.19)
+PRODUCT_PACKAGES += \
+    vendor.qti.hardware.vibrator.service
+
 # Keyboard
 PRODUCT_COPY_FILES += \
     $(call find-copy-subdir-files,*,$(COMMON_PATH)/configs/keylayout/keychars,$(TARGET_COPY_OUT_VENDOR)/usr/keychars/) \
@@ -296,8 +306,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     libc2dcolorconvert \
     libOmxCore \
-    libOmxVdec \
-    libOmxVenc \
     libstagefrighthw
 
 # Partitions

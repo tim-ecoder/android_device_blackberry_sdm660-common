@@ -91,9 +91,9 @@ BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom
 BOARD_KERNEL_CMDLINE += user_debug=31 msm_rtb.filter=0x37
 BOARD_KERNEL_CMDLINE += ehci-hcd.park=3 lpm_levels.sleep_disabled=1
 BOARD_KERNEL_CMDLINE += sched_enable_hmp=1 sched_enable_power_aware=1
-BOARD_KERNEL_CMDLINE += service_locator.enable=1 swiotlb=1
+BOARD_KERNEL_CMDLINE += service_locator.enable=1
 BOARD_KERNEL_CMDLINE += androidboot.configfs=true androidboot.usbcontroller=a800000.dwc3
-BOARD_KERNEL_CMDLINE += coherent_pool=1280K
+BOARD_KERNEL_CMDLINE += coherent_pool=1280K regulator_ignore_unused
 # BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
 
 BOARD_KERNEL_BASE        := 0x0
@@ -103,8 +103,10 @@ BOARD_SECOND_OFFSET      := 0x00f00000
 BOARD_KERNEL_PAGESIZE    := 4096
 BOARD_KERNEL_IMAGE_NAME  := Image.gz-dtb
 
-TARGET_KERNEL_VERSION := 4.4
-TARGET_KERNEL_SOURCE := kernel/blackberry/sdm660
+TARGET_KERNEL_VERSION := 4.19
+TARGET_KERNEL_SOURCE := kernel/blackberry/sdm660-4p19
+TARGET_KERNEL_CLANG_COMPILE := true
+TARGET_KERNEL_NO_GCC := true
 
 # GPS
 BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE := default

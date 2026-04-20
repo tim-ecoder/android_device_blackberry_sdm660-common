@@ -50,15 +50,7 @@
             <instance>widevine</instance>
         </interface>
     </hal>
-    <hal format="hidl">
-        <name>android.hardware.gatekeeper</name>
-        <transport>hwbinder</transport>
-        <version>1.0</version>
-        <interface>
-            <name>IGatekeeper</name>
-            <instance>default</instance>
-        </interface>
-    </hal>
+    <!-- Gatekeeper provided by software service, not in manifest -->
     <hal format="hidl">
         <name>android.hardware.graphics.allocator</name>
         <transport>hwbinder</transport>
@@ -179,6 +171,7 @@
             <instance>default</instance>
         </interface>
     </hal>
+    <!-- Vibrator HAL disabled - blocks boot on 4.19; vendor.qti.hardware.vibrator service is used instead
     <hal format="hidl">
         <name>android.hardware.vibrator</name>
         <transport>hwbinder</transport>
@@ -188,6 +181,7 @@
             <instance>default</instance>
         </interface>
     </hal>
+    -->
     <!--
     <hal format="hidl">
         <name>android.hardware.wifi</name>
@@ -287,7 +281,7 @@
     <hal format="hidl">
         <name>vendor.display.config</name>
         <transport>hwbinder</transport>
-        <version>1.0</version>
+        <version>2.0</version>
         <interface>
             <name>IDisplayConfig</name>
             <instance>default</instance>
@@ -302,6 +296,7 @@
             <instance>default</instance>
         </interface>
     </hal>
+    <!-- Goodix fingerprint HALs removed - gx_fpd crashes and blocks boot on 4.19 without proper TZ
     <hal format="hidl">
         <name>vendor.goodix.hardware.fingerprint</name>
         <transport>hwbinder</transport>
@@ -320,6 +315,7 @@
             <instance>default</instance>
         </interface>
     </hal>
+    -->
     <hal format="hidl">
         <name>vendor.qti.hardware.alarm</name>
         <transport>hwbinder</transport>
