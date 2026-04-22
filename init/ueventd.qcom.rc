@@ -334,6 +334,13 @@ firmware_directories /vendor/firmware_mnt/image/
 /dev/msm_npu             0644   system     system
 
 # USB role switch
+# The 4.19 kernel on athena only exposes the newer Type-C sysfs class;
+# /sys/class/dual_role_usb/ is absent. The QTI AIDL USB HAL runs as
+# user system and writes to port_type/power_role/data_role, so chown
+# those here the same way Sony/whyred chown dual_role_usb entries.
+/sys/class/typec/port0		data_role	0660	system	system
+/sys/class/typec/port0		power_role	0660	system	system
+/sys/class/typec/port0		port_type	0660	system	system
 /sys/class/dual_role_usb/*	data_role	0660	system	system
 /sys/class/dual_role_usb/*	power_role	0660	system	system
 /sys/class/dual_role_usb/*	mode		0660	system	system

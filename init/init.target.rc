@@ -65,8 +65,13 @@ on post-fs
 on init
     write /sys/module/qpnp_rtc/parameters/poweron_alarm 1
 
-on post-fs-data
-    # Force start adbd early for debugging
+on late-init
+    stop console
+
+on post-fs-data && property:vendor.usb.use_gadget_hal=0
+    # Force start adbd early for debugging (legacy path only; when the
+    # AIDL gadget HAL is in use, configfs must stay at 2 and the HAL
+    # drives the function setup, so this override would defeat it).
     setprop sys.usb.configfs 1
     setprop sys.usb.config adb
     mkdir /data/tombstones/modem 0771 system system
@@ -115,7 +120,9 @@ on boot
     setprop vendor.usb.rmnet.inst.name "rmnet"
     setprop vendor.usb.dpl.inst.name "dpl"
     write /sys/module/usb_f_qcrndis/parameters/rndis_dl_max_xfer_size 15916
-    setprop sys.usb.configfs 1
+    # Don't hard-set sys.usb.configfs here: init.qcom.usb.rc already picks
+    # the right value based on vendor.usb.use_gadget_hal (2 for HAL mode,
+    # 1 for legacy via the vendor.usb.controller trigger).
 
 #Peripheral manager
 service vendor.per_mgr /system/vendor/bin/pm-service
