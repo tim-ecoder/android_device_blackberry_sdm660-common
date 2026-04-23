@@ -5,6 +5,20 @@ get_prop(hal_camera_default, persist_debug_prop)
 
 allow hal_camera_default persist_file:dir search;
 
+# Preserve LD_PRELOAD across the init -> hal_camera_default exec transition.
+# The BB OREO camera blob (camera.sdm660.so + libqomx_jpegenc_pipe.so etc.)
+# reads gralloc private_handle_t at the V1 field offsets Android 8 used.
+# On Android 16 (LOS23) the layout is V4, shifting size/offset/base by 20
+# bytes. libcameracompat.so -- setenv'd via LD_PRELOAD in
+# init.cameracompat.rc -- hooks native_handle_clone() and rearranges the
+# handle data back to V1 order. Without this noatsecure grant, the
+# SELinux domain transition sets AT_SECURE=1 in the auxv, bionic's linker
+# scrubs LD_*, the shim never loads, and the JPEG encoder reads garbage
+# offsets -> output buffer has no JPEG header -> Aperture's ExifInterface
+# rejects the save. init is the trust root; AOSP uses the same pattern
+# for several other HAL domains.
+allow init hal_camera_default:process noatsecure;
+
 # Allow to find graphics allocator service
 allow hal_camera_default hal_graphics_allocator_service:service_manager find;
 

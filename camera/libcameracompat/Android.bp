@@ -15,6 +15,13 @@ cc_library_shared {
         "-Wno-unused-parameter",
     ],
 
+    // The source is pure C. Android Soong's default C++ STL pulls in
+    // libc++.so which isn't reachable from the vendor linker namespace
+    // on Android 14+ (not whitelisted in namespace.default.link.system).
+    // Without this, LD_PRELOAD silently fails and the JPEG encoder
+    // crashes with V4/V1 gralloc handle mismatch.
+    stl: "none",
+
     compile_multilib: "32",
     vendor: true,
 }
