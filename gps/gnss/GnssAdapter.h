@@ -285,6 +285,9 @@ class GnssAdapter : public LocAdapterBase {
     /* === NativeAgpsHandler ======================================================== */
     NativeAgpsHandler mNativeAgpsHandler;
 
+    /* === XTRA ======================================================================== */
+    virtual bool requestXtraData() override;
+
     /* === Misc callback from QMI LOC API ============================================== */
     GnssEnergyConsumedCallback mGnssEnergyConsumedCb;
     std::function<void(bool)> mPowerStateCb;

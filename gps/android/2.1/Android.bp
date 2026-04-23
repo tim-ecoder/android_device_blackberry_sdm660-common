@@ -13,6 +13,7 @@ cc_library_shared {
         "GnssNi.cpp",
         "GnssDebug.cpp",
         "GnssAntennaInfo.cpp",
+        "GnssXtra.cpp",
         "MeasurementCorrections.cpp",
         "GnssVisibilityControl.cpp",
     ] + [
@@ -92,5 +93,5 @@ cc_binary {
         "android.hardware.gnss@2.1",
     ],
 
-    cflags: GNSS_CFLAGS + ["-DLOC_HIDL_VERSION=\"4.2\""],
+    cflags: GNSS_CFLAGS + ["-DLOC_HIDL_VERSION=\"4.0\""],
 }

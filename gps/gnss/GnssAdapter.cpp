@@ -2258,6 +2258,14 @@ GnssAdapter::gnssUpdateXtraThrottleCommand(const bool enabled)
     sendMsg(new UpdateXtraThrottleMsg(*this, enabled));
 }
 
+bool
+GnssAdapter::requestXtraData()
+{
+    LOC_LOGD("%s]: modem requesting XTRA data, forwarding to xtra-daemon", __func__);
+    mXtraObserver.onStatusRequested(0);
+    return true;
+}
+
 void
 GnssAdapter::injectLocationCommand(double latitude, double longitude, float accuracy)
 {
