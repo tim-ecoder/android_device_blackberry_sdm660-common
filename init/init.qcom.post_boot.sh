@@ -2369,14 +2369,6 @@ case "$target" in
             echo 90 > /proc/sys/kernel/sched_downmigrate
             echo 140 > /proc/sys/kernel/sched_group_upmigrate
             echo 120 > /proc/sys/kernel/sched_group_downmigrate
-            echo 0 > /proc/sys/kernel/sched_select_prev_cpu_us
-            echo 400000 > /proc/sys/kernel/sched_freq_inc_notify
-            echo 400000 > /proc/sys/kernel/sched_freq_dec_notify
-            echo 5 > /proc/sys/kernel/sched_spill_nr_run
-            echo 1 > /proc/sys/kernel/sched_restrict_cluster_spill
-            echo 100000 > /proc/sys/kernel/sched_short_burst_ns
-            echo 1 > /proc/sys/kernel/sched_prefer_sync_wakee_to_waker
-            echo 20 > /proc/sys/kernel/sched_small_wakee_task_load
 
             # cpuset settings
             echo 0-3 > /dev/cpuset/background/cpus
@@ -2385,40 +2377,80 @@ case "$target" in
             # disable thermal bcl hotplug to switch governor
             echo 0 > /sys/module/msm_thermal/core_control/enabled
 
-            # online CPU0
+            # online CPU0 and CPU4 before touching governors
             echo 1 > /sys/devices/system/cpu/cpu0/online
-            # configure governor settings for little cluster
-            echo "interactive" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
-            echo 1 > /sys/devices/system/cpu/cpu0/cpufreq/interactive/use_sched_load
-            echo 1 > /sys/devices/system/cpu/cpu0/cpufreq/interactive/use_migration_notif
-            echo "19000 1401600:39000" > /sys/devices/system/cpu/cpu0/cpufreq/interactive/above_hispeed_delay
-            echo 90 > /sys/devices/system/cpu/cpu0/cpufreq/interactive/go_hispeed_load
-            echo 20000 > /sys/devices/system/cpu/cpu0/cpufreq/interactive/timer_rate
-            echo 1401600 > /sys/devices/system/cpu/cpu0/cpufreq/interactive/hispeed_freq
-            echo 0 > /sys/devices/system/cpu/cpu0/cpufreq/interactive/io_is_busy
-            echo "85 1747200:95" > /sys/devices/system/cpu/cpu0/cpufreq/interactive/target_loads
-            echo 39000 > /sys/devices/system/cpu/cpu0/cpufreq/interactive/min_sample_time
-            echo 0 > /sys/devices/system/cpu/cpu0/cpufreq/interactive/max_freq_hysteresis
-            echo 633600 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
-            echo 1 > /sys/devices/system/cpu/cpu0/cpufreq/interactive/ignore_hispeed_on_notif
-            echo 1 > /sys/devices/system/cpu/cpu0/cpufreq/interactive/fast_ramp_down
-            # online CPU4
             echo 1 > /sys/devices/system/cpu/cpu4/online
-            # configure governor settings for big cluster
-            echo "interactive" > /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor
-            echo 1 > /sys/devices/system/cpu/cpu4/cpufreq/interactive/use_sched_load
-            echo 1 > /sys/devices/system/cpu/cpu4/cpufreq/interactive/use_migration_notif
-            echo "19000 1401600:39000" > /sys/devices/system/cpu/cpu4/cpufreq/interactive/above_hispeed_delay
-            echo 90 > /sys/devices/system/cpu/cpu4/cpufreq/interactive/go_hispeed_load
-            echo 20000 > /sys/devices/system/cpu/cpu4/cpufreq/interactive/timer_rate
-            echo 1401600 > /sys/devices/system/cpu/cpu4/cpufreq/interactive/hispeed_freq
-            echo 0 > /sys/devices/system/cpu/cpu4/cpufreq/interactive/io_is_busy
-            echo "85 1401600:90 2150400:95" > /sys/devices/system/cpu/cpu4/cpufreq/interactive/target_loads
-            echo 39000 > /sys/devices/system/cpu/cpu4/cpufreq/interactive/min_sample_time
-            echo 0 > /sys/devices/system/cpu/cpu4/cpufreq/interactive/max_freq_hysteresis
-            echo 633600 > /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq
-            echo 1 > /sys/devices/system/cpu/cpu4/cpufreq/interactive/ignore_hispeed_on_notif
-            echo 1 > /sys/devices/system/cpu/cpu4/cpufreq/interactive/fast_ramp_down
+
+            # Kernel version detect (schedutil sysfs layout changed in 4.19)
+            KernelVersionStr=`cat /proc/sys/kernel/osrelease`
+            KernelVersionS=${KernelVersionStr:2:2}
+            KernelVersionA=${KernelVersionStr:0:1}
+            KernelVersionB=${KernelVersionS%.*}
+
+            if [ $KernelVersionA -ge 4 ] && [ $KernelVersionB -ge 19 ]; then
+                # 4.19+: write to per-policy nodes (Sony Nile style)
+                # little cluster
+                echo "schedutil" > /sys/devices/system/cpu/cpufreq/policy0/scaling_governor
+                echo 0 > /sys/devices/system/cpu/cpufreq/policy0/schedutil/up_rate_limit_us
+                echo 0 > /sys/devices/system/cpu/cpufreq/policy0/schedutil/down_rate_limit_us
+                echo 1401600 > /sys/devices/system/cpu/cpufreq/policy0/schedutil/hispeed_freq
+                echo 0 > /sys/devices/system/cpu/cpufreq/policy0/schedutil/pl
+                echo 633600 > /sys/devices/system/cpu/cpufreq/policy0/scaling_min_freq
+                echo 902400 > /sys/devices/system/cpu/cpufreq/policy0/schedutil/rtg_boost_freq
+
+                # big cluster
+                echo "schedutil" > /sys/devices/system/cpu/cpufreq/policy4/scaling_governor
+                echo 0 > /sys/devices/system/cpu/cpufreq/policy4/schedutil/up_rate_limit_us
+                echo 0 > /sys/devices/system/cpu/cpufreq/policy4/schedutil/down_rate_limit_us
+                echo 1401600 > /sys/devices/system/cpu/cpufreq/policy4/schedutil/hispeed_freq
+                echo 0 > /sys/devices/system/cpu/cpufreq/policy4/schedutil/pl
+                echo 1113600 > /sys/devices/system/cpu/cpufreq/policy4/scaling_min_freq
+                echo 0 > /sys/devices/system/cpu/cpufreq/policy4/schedutil/rtg_boost_freq
+            else
+                # Pre-4.19 fallback: per-cpu path
+                echo "schedutil" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+                echo 0 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/up_rate_limit_us
+                echo 0 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/down_rate_limit_us
+                echo 1401600 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/hispeed_freq
+
+                echo "schedutil" > /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor
+                echo 0 > /sys/devices/system/cpu/cpu4/cpufreq/schedutil/up_rate_limit_us
+                echo 0 > /sys/devices/system/cpu/cpu4/cpufreq/schedutil/down_rate_limit_us
+                echo 1401600 > /sys/devices/system/cpu/cpu4/cpufreq/schedutil/hispeed_freq
+            fi
+
+            echo 1 > /proc/sys/kernel/sched_walt_rotate_big_tasks
+
+            # Input touch-boost (path moved in 4.19)
+            if [ $KernelVersionA -ge 4 ] && [ $KernelVersionB -ge 19 ]; then
+                echo "0:1401600" > /sys/devices/system/cpu/cpu_boost/input_boost_freq
+                echo 40 > /sys/devices/system/cpu/cpu_boost/input_boost_ms
+            else
+                echo "0:1401600" > /sys/module/cpu_boost/parameters/input_boost_freq
+                echo 40 > /sys/module/cpu_boost/parameters/input_boost_ms
+            fi
+
+            # sched_load_boost: 0 = neutral. Sony Nile uses -6 (bias to little
+            # cluster for battery) but on this kernel it suppresses up-migration
+            # to the big cluster under camera/heavy loads -> visible lag.
+            echo 0 > /sys/devices/system/cpu/cpu0/sched_load_boost
+            echo 0 > /sys/devices/system/cpu/cpu1/sched_load_boost
+            echo 0 > /sys/devices/system/cpu/cpu2/sched_load_boost
+            echo 0 > /sys/devices/system/cpu/cpu3/sched_load_boost
+            echo 0 > /sys/devices/system/cpu/cpu4/sched_load_boost
+            echo 0 > /sys/devices/system/cpu/cpu5/sched_load_boost
+            echo 0 > /sys/devices/system/cpu/cpu6/sched_load_boost
+            echo 0 > /sys/devices/system/cpu/cpu7/sched_load_boost
+
+            if [ $KernelVersionA -ge 4 ] && [ $KernelVersionB -ge 19 ]; then
+                echo 85 > /sys/devices/system/cpu/cpufreq/policy0/schedutil/hispeed_load
+                echo 85 > /sys/devices/system/cpu/cpufreq/policy4/schedutil/hispeed_load
+                # memlat settings moved to target-specific file in 4.19
+                setprop vendor.dcvs.prop 1
+            else
+                echo 85 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/hispeed_load
+                echo 85 > /sys/devices/system/cpu/cpu4/cpufreq/schedutil/hispeed_load
+            fi
 
             # bring all cores online
             echo 1 > /sys/devices/system/cpu/cpu0/online
@@ -2453,6 +2485,11 @@ case "$target" in
 
             # Set Memory parameters
             configure_memory_parameters
+			
+			# lazy
+            echo 60 > /proc/sys/vm/swappiness
+            echo 3 > /proc/sys/vm/page-cluster
+            echo 50 > /proc/sys/vm/vfs_cache_pressure
 
             # Enable bus-dcvs
             for cpubw in /sys/class/devfreq/*qcom,cpubw*
