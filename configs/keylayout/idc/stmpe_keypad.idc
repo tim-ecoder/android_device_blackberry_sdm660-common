@@ -11,3 +11,4 @@ device.internal = 1
 keyboard.builtIn = 1
 keyboard.layout = stmpe
 keyboard.characterMap = stmpe
+keyboard.doNotWakeByDefault = 1
