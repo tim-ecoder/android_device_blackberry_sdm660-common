@@ -52,8 +52,11 @@
          Zone N + 1     array[N] <= LUX < infinity
 
          Must be overridden in platform specific overlays -->
+    <!-- Bottom zone widened (0..5 lux) and held flat at backlight 5 to absorb
+         RPR0521 sub-1-lux noise (~0.04..0.7 lux) that previously interpolated
+         across (0,2)→(1,7) and produced 12%↔16% backlight flicker. -->
     <integer-array name="config_autoBrightnessLevels">
-        <item>1</item>
+        <item>5</item>
         <item>9</item>
         <item>10</item>
         <item>100</item>
@@ -64,8 +67,8 @@
     </integer-array>
 
     <integer-array name="config_autoBrightnessLcdBacklightValues">
-        <item>2</item>
-        <item>7</item>
+        <item>5</item>
+        <item>5</item>
         <item>7</item>
         <item>19</item>
         <item>42</item>
@@ -73,6 +76,22 @@
         <item>130</item>
         <item>250</item>
         <item>550</item>
+    </integer-array>
+
+    <!-- Hysteresis floor for low lux: under 5 lux require 50% lux change before
+         re-evaluating brightness; above 5 lux fall back to AOSP defaults
+         (10% brighten / 20% darken). Pure percentage hysteresis is insufficient
+         in dim conditions because 10% of 0.04 lux is below sensor noise. -->
+    <integer-array name="config_ambientThresholdLevels">
+        <item>5</item>
+    </integer-array>
+    <integer-array name="config_ambientBrighteningThresholds">
+        <item>500</item>
+        <item>100</item>
+    </integer-array>
+    <integer-array name="config_ambientDarkeningThresholds">
+        <item>500</item>
+        <item>200</item>
     </integer-array>
 
     <!-- Minimum screen brightness allowed by the power manager. -->
