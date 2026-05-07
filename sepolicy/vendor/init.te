@@ -24,3 +24,9 @@ allow init tee_device:chr_file { ioctl open read write };
 allow init vendor_file:file { execute execute_no_trans };
 allow init vndbinder_device:chr_file { ioctl open read write };
 allow init vndservicemanager:binder { call transfer };
+
+# gatekeeperd uses init for ctl.start
+allow gatekeeperd init:binder call;
+
+# init triggers gatekeeper hwservice lookup before software service registers
+allow init hal_gatekeeper_hwservice:hwservice_manager { add find };

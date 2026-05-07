@@ -1,1 +1,7 @@
 get_prop(appdomain, exported_camera_prop);
+
+# Cosmetic — apps probe these on launch and don't need real access
+dontaudit appdomain vendor_camera_prop:file r_file_perms;
+dontaudit appdomain qemu_hw_prop:file r_file_perms;
+dontaudit appdomain proc_tty_drivers:file r_file_perms;
+dontaudit appdomain proc:file r_file_perms;

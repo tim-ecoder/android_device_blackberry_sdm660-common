@@ -1,0 +1,3 @@
+# vendor_dataservice_app reads vendor_default_prop and vendor_dpm_prop
+get_prop(vendor_dataservice_app, vendor_default_prop)
+get_prop(vendor_dataservice_app, vendor_dpm_prop)

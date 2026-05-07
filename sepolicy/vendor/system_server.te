@@ -14,3 +14,9 @@ allow system_server media_rw_data_file:dir { setattr };
 allow system_server sysfs_livedisplay_tuneable:file { read write };
 allow system_server hal_audio_default:binder { call transfer };
 allow system_server init:binder call;
+
+# AlarmManager reads vendor_alarm_prop
+get_prop(system_server, vendor_alarm_prop)
+
+# Read sysfs entries that aren't covered by specific labels
+allow system_server sysfs:file r_file_perms;

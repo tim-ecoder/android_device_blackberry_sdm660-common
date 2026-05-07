@@ -8,9 +8,9 @@ genfscon sysfs /devices/virtual/tp_device/tp_gesture/gesture_enable             
 # Glove Mode
 genfscon sysfs /devices/virtual/tp_device/tp_glove/glove_enable                              u:object_r:sysfs_touch_glove_mode:s0
 
-# LEDs
-genfscon sysfs /devices/soc/c176000.i2c/i2c-2/2-0064/leds/keyboard-backlight/brightness     u:object_r:sysfs_leds:s0
-genfscon sysfs /devices/soc/c175000.i2c/i2c-1/1-0030/leds/button-backlight/brightness        u:object_r:sysfs_leds:s0
+# LEDs (4.19 kernel uses /devices/platform/soc/... not /devices/soc/...)
+genfscon sysfs /devices/platform/soc/c176000.i2c/i2c-2/2-0064/leds/keyboard-backlight/brightness u:object_r:sysfs_leds:s0
+genfscon sysfs /devices/platform/soc/c175000.i2c/i2c-1/1-0030/leds/button-backlight/brightness   u:object_r:sysfs_leds:s0
 
 # Touch nav buttons
 genfscon sysfs /devices/virtual/tp_device/tp_button/button_enable                           u:object_r:sysfs_touch_nav_buttons:s0

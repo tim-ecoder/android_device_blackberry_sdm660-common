@@ -2,3 +2,6 @@ allow platform_app sysfs_kgsl:dir search;
 
 # touchkeypad stuffs
 allow platform_app default_android_service:service_manager find;
+
+# Cosmetic: platform apps probe vendor_default_prop on launch — silence
+dontaudit platform_app vendor_default_prop:file r_file_perms;

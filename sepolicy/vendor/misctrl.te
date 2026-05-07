@@ -1,1 +1,2 @@
-# todo
+# misctrl is a coredomain. Same reason as kcmdlinectrl.te — denials
+# reading sysfs_dt_firmware_android remain, service silently no-ops.

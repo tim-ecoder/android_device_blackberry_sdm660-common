@@ -98,7 +98,9 @@ BOARD_KERNEL_CMDLINE += sched_enable_hmp=1 sched_enable_power_aware=1
 BOARD_KERNEL_CMDLINE += service_locator.enable=1
 BOARD_KERNEL_CMDLINE += androidboot.configfs=true androidboot.usbcontroller=a800000.dwc3
 BOARD_KERNEL_CMDLINE += coherent_pool=1280K regulator_ignore_unused
-BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
+# SELinux: enforcing by default (vendor sepolicy hardened — see sepolicy/vendor/).
+# To temporarily go permissive for triage:
+# BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
 # UART console disabled — comment-in to enable:
 # BOARD_KERNEL_CMDLINE += console=ttyMSM0,115200n8 androidboot.console=ttyMSM0
 # BOARD_KERNEL_CMDLINE += earlycon=msm_serial_dm,0xc170000

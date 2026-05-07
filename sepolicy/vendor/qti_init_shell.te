@@ -30,4 +30,7 @@ allow qti_init_shell cache_file:file { create write open getattr append };
 allow qti_init_shell kmsg_device:chr_file { read open };
 allow qti_init_shell logdr_socket:sock_file write;
 allow qti_init_shell logd:unix_stream_socket connectto;
-allow qti_init_shell self:capability { dac_override };
+allow qti_init_shell self:capability { dac_override kill };
+# Note: init.qcom*.sh getprop init.svc.* hits init_service_status_private_prop
+# which is a private system type — can't be granted from vendor sepolicy.
+# Cosmetic denial; getprop falls back to empty string and scripts continue.

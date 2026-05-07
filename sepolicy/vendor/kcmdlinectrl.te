@@ -1,1 +1,4 @@
-# todo
+# kcmdlinectrl is a coredomain (system/sepolicy/private/). Vendor sepolicy
+# cannot extend it. Denials reading /sys/firmware/devicetree/base/firmware/
+# android/{compatible,fstab} remain — service silently skips DT-based
+# cmdline overrides on this device, which is fine.

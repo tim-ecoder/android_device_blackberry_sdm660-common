@@ -24,3 +24,11 @@ allow vendor_init build_prop:property_service set;
 allow vendor_init default_prop:property_service set;
 allow vendor_init radio_prop:property_service set;
 allow vendor_init powerctl_prop:file read;
+
+# init.qcom.rc 'symlink /dev/video0 /dev/msm_config' + chmod/chown
+allow vendor_init audio_device:lnk_file { create setattr };
+
+# Note: vendor_init reading init.svc.wpa_supplicant hits a private type
+# (init_service_status_private_prop). Same for /data/misc/seemp dir
+# (vendor_seemp_data_file in qcom legacy private). Cosmetic denials —
+# can't be granted from vendor sepolicy, init falls back fine.

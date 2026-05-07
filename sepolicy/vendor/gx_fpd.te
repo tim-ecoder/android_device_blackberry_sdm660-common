@@ -50,3 +50,9 @@ dontaudit gx_fpd default_prop:property_service set;
 
 # ... and for whatever reason trying to call random stuff
 dontaudit gx_fpd hwservicemanager:binder call;
+
+# Goodix HIDL fingerprint service registration
+allow gx_fpd hidl_base_hwservice:hwservice_manager add;
+allow gx_fpd default_android_hwservice:hwservice_manager add;
+allow gx_fpd hwservicemanager:binder { call transfer };
+allow hwservicemanager gx_fpd:binder { call transfer };

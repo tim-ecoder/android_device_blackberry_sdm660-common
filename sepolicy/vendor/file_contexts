@@ -42,3 +42,7 @@
 
 # Widevine
 /(vendor|system/vendor)/bin/hw/android.hardware.drm@1.0-service.widevine        u:object_r:hal_drm_widevine_exec:s0
+
+# AOSP software gatekeeper service (the system file_contexts regex
+# matches '...@1.0-service' but not the '.software' suffix variant)
+/(vendor|system/vendor)/bin/hw/android\.hardware\.gatekeeper@1\.0-service\.software     u:object_r:hal_gatekeeper_default_exec:s0
