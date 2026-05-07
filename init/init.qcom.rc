@@ -248,7 +248,9 @@ on boot
 on post-fs-data
     mkdir /data/vendor/misc 01771 system system
     start loggy
-    start loggy2
+    # loggy2 (UART logcat streaming) disabled by default — start manually
+    # via setprop ctl.start loggy2 when debugging
+    # start loggy2
 
     # Create /dev/msm_config alias for camera blob compatibility
     symlink /dev/video0 /dev/msm_config
@@ -1245,3 +1247,5 @@ service loggy2 /vendor/bin/loggy2.sh
     class core
     user root
     oneshot
+    disabled
+    seclabel u:r:su:s0
